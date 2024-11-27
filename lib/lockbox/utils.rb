@@ -78,7 +78,7 @@ module Lockbox
 
       ActiveSupport::Notifications.instrument("encrypt_file.lockbox", {name: name}) do
         options = encrypted_options(record, name)
-        box = build_box(record, options, record.class.table_name, name)
+        box = build_box(record, options, record.class.c_table_name, name)
 
         case attachable
         when ActionDispatch::Http::UploadedFile, Rack::Test::UploadedFile
@@ -110,7 +110,7 @@ module Lockbox
 
     def self.decrypt_result(record, name, options, result)
       ActiveSupport::Notifications.instrument("decrypt_file.lockbox", {name: name}) do
-        Utils.build_box(record, options, record.class.table_name, name).decrypt(result)
+        Utils.build_box(record, options, record.class.c_table_name, name).decrypt(result)
       end
     end
 
