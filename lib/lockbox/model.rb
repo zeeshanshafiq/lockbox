@@ -588,7 +588,7 @@ module Lockbox
 
           # for fixtures
           define_singleton_method encrypt_method_name do |message, **opts|
-            table = activerecord ? table_name : collection_name.to_s
+            table = activerecord ? c_table_name : collection_name.to_s
 
             unless message.nil?
               case options[:type]
@@ -652,7 +652,7 @@ module Lockbox
               if ciphertext.nil? || (ciphertext == "" && !options[:padding])
                 ciphertext
               else
-                table = activerecord ? table_name : collection_name.to_s
+                table = activerecord ? c_table_name : collection_name.to_s
                 Lockbox::Utils.build_box(opts[:context], options, table, encrypted_attribute).decrypt(ciphertext)
               end
 
